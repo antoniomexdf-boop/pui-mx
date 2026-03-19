@@ -1,0 +1,3 @@
+curp,nombre_completo,tipo_evento,fecha_evento,descripcion_lugar,direccion_completa,telefono,correo,fecha_creacion,fecha_modificacion,lugar_nacimiento,sexo_asignado
+TEST010101HDFABC01,JUAN PEREZ LOPEZ,ALTA_PADRON,2024-11-10,Modulo central CDMX,"Av. Reforma 123, Cuauhtemoc, CDMX",5512345678,juan.perez@example.com,2024-11-10 09:30:00,2025-01-15 10:00:00,CDMX,H
+MOPR800101MDFXYZ09,MARIA ORTIZ PRADO,REGISTRO_BENEFICIO,2025-02-03,Oficina Oriente,"Calle Sur 200, Iztapalapa, CDMX",5587654321,maria.ortiz@example.com,2025-02-03 11:15:00,2025-02-10 16:20:00,CDMX,M

@@ -1,0 +1,88 @@
+version: "3.9"
+
+services:
+  platform-db:
+    image: mariadb:11.4
+    container_name: pui-mx-platform-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${PLATFORM_MARIADB_DATABASE}
+      MARIADB_USER: ${PLATFORM_MARIADB_USER}
+      MARIADB_PASSWORD: ${PLATFORM_MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${PLATFORM_MARIADB_ROOT_PASSWORD}
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"
+    volumes:
+      - platform_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-p${PLATFORM_MARIADB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  datos-db:
+    image: mariadb:11.4
+    container_name: pui-mx-datos-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: ${DATOS_MARIADB_DATABASE}
+      MARIADB_USER: ${DATOS_MARIADB_USER}
+      MARIADB_PASSWORD: ${DATOS_MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DATOS_MARIADB_ROOT_PASSWORD}
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3308:3306"
+    volumes:
+      - datos_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-p${DATOS_MARIADB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  pui-mx-app:
+    image: ${APP_IMAGE}
+    container_name: pui-mx-app
+    restart: unless-stopped
+    depends_on:
+      platform-db:
+        condition: service_healthy
+      datos-db:
+        condition: service_healthy
+    working_dir: /opt/pui/app
+    command: >
+      sh -c "java -jar ${APP_JAR_NAME} --spring.profiles.active=${SPRING_PROFILES_ACTIVE}"
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      SSL_KEYSTORE_PATH: ${SSL_KEYSTORE_PATH}
+      SSL_KEYSTORE_PASS: ${SSL_KEYSTORE_PASS}
+      PLATFORM_DB_URL: ${PLATFORM_DB_URL}
+      PLATFORM_DB_USERNAME: ${PLATFORM_DB_USERNAME}
+      PLATFORM_DB_PASSWORD: ${PLATFORM_DB_PASSWORD}
+      DATOS_DB_URL: ${DATOS_DB_URL}
+      DATOS_DB_USERNAME: ${DATOS_DB_USERNAME}
+      DATOS_DB_PASSWORD: ${DATOS_DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      PUI_CLAVE_RECIBIDA: ${PUI_CLAVE_RECIBIDA}
+      PUI_RFC_HOMOCLAVE: ${PUI_RFC_HOMOCLAVE}
+      PUI_API_CLAVE: ${PUI_API_CLAVE}
+      PUI_BIOMETRICOS_CLAVE: ${PUI_BIOMETRICOS_CLAVE}
+      PUI_BASE_URL: ${PUI_BASE_URL}
+      PUI_CONNECT_TIMEOUT_MS: ${PUI_CONNECT_TIMEOUT_MS}
+      PUI_READ_TIMEOUT_MS: ${PUI_READ_TIMEOUT_MS}
+      PUI_DEMO_MODE: ${PUI_DEMO_MODE}
+      PUI_SCHEDULER_CRON: ${PUI_SCHEDULER_CRON}
+    expose:
+      - "8443"
+    volumes:
+      - ../../target:/opt/pui/app
+      - ./certs:/opt/pui/certs:ro
+
+volumes:
+  platform_db_data:
+  datos_db_data:

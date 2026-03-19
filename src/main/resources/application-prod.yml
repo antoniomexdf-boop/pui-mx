@@ -1,0 +1,65 @@
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: ${SSL_KEYSTORE_PATH}
+    key-store-password: ${SSL_KEYSTORE_PASS}
+    key-store-type: PKCS12
+    protocol: TLS
+    enabled-protocols: TLSv1.2,TLSv1.3
+
+spring:
+  jpa:
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+
+app:
+  datasource:
+    platform:
+      jdbc-url: ${PLATFORM_DB_URL:jdbc:mariadb://localhost:3306/platform_db?useSsl=false}
+      username: ${PLATFORM_DB_USERNAME}
+      password: ${PLATFORM_DB_PASSWORD}
+      driver-class-name: org.mariadb.jdbc.Driver
+    datos:
+      jdbc-url: ${DATOS_DB_URL:jdbc:mariadb://localhost:3306/datos_db?useSsl=false}
+      username: ${DATOS_DB_USERNAME}
+      password: ${DATOS_DB_PASSWORD}
+      driver-class-name: org.mariadb.jdbc.Driver
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration-ms: 3600000
+
+pui:
+  usuario: PUI
+  clave: ${PUI_CLAVE_RECIBIDA}
+  api:
+    base-url: ${PUI_BASE_URL:https://www.api.plataformadebusqueda.gob.mx/api/2_3_0}
+    institucion-id: ${PUI_RFC_HOMOCLAVE}
+    clave: ${PUI_API_CLAVE}
+    connect-timeout-ms: ${PUI_CONNECT_TIMEOUT_MS:5000}
+    read-timeout-ms: ${PUI_READ_TIMEOUT_MS:5000}
+    demo-mode: ${PUI_DEMO_MODE:false}
+  biometricos:
+    clave: ${PUI_BIOMETRICOS_CLAVE}
+  scheduler:
+    cron: ${PUI_SCHEDULER_CRON:0 0 * * * *}
+
+logging:
+  level:
+    mx.gob.institucion: INFO
+    org.springframework.security: WARN
+  pattern:
+    console: >
+      {"timestamp":"%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
+       "level":"%level",
+       "thread":"%thread",
+       "logger":"%logger{36}",
+       "message":"%message"}%n
+  file:
+    name: /var/log/pui-institucion/app.log

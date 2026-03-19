@@ -1,0 +1,235 @@
+/*
+ * @copyright 2026 Jesus Antonio Jimenez Avina <antoniomexdf@gmail.com>
+ * @license   https://opensource.org/licenses/MIT MIT License.
+ * @repository https://github.com/antoniomexdf-boop/pui-mx
+ */
+
+:root {
+  --bg: #0e1726;
+  --bg-soft: #162338;
+  --panel: rgba(18, 29, 46, 0.88);
+  --line: rgba(132, 154, 190, 0.22);
+  --text: #e8eef8;
+  --muted: #9cb0cf;
+  --accent: #33d1a0;
+  --accent-soft: rgba(51, 209, 160, 0.12);
+  --danger: #ff7b72;
+  --font: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(51, 209, 160, 0.16), transparent 28%),
+    radial-gradient(circle at top right, rgba(104, 138, 255, 0.18), transparent 24%),
+    linear-gradient(180deg, #0a1320 0%, #101b2e 100%);
+}
+
+.shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+}
+
+.sidebar {
+  padding: 28px;
+  border-right: 1px solid var(--line);
+  background: rgba(6, 12, 22, 0.72);
+  backdrop-filter: blur(14px);
+}
+
+.brand-kicker,
+.eyebrow,
+.tag {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  color: var(--accent);
+}
+
+.brand h1 {
+  margin: 8px 0 6px;
+  font-size: 34px;
+}
+
+.brand p,
+#last-update,
+.refresh-toggle span {
+  color: var(--muted);
+}
+
+.panel,
+.card,
+.stat {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.panel {
+  margin-top: 22px;
+  padding: 18px;
+}
+
+.panel h2,
+.card h3 {
+  margin-top: 0;
+}
+
+form,
+.refresh-toggle {
+  display: grid;
+  gap: 10px;
+}
+
+input,
+button {
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  font: inherit;
+}
+
+input {
+  padding: 12px 14px;
+  background: var(--bg-soft);
+  color: var(--text);
+}
+
+button {
+  padding: 12px 14px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #33d1a0, #4aa0ff);
+  color: #08131f;
+  font-weight: 700;
+}
+
+.content {
+  padding: 28px;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.hero h2 {
+  margin: 6px 0 0;
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat {
+  padding: 18px;
+}
+
+.stat strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.grid.single {
+  grid-template-columns: 1fr;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 18px 0;
+  gap: 14px;
+}
+
+.table-wrap {
+  overflow: auto;
+  padding: 12px 18px 18px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+th,
+td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.pill.off {
+  background: rgba(255, 123, 114, 0.12);
+  color: var(--danger);
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 18px;
+}
+
+@media (max-width: 1080px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

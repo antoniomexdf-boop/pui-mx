@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Build
+target/
+*.log
+resultado-test.txt
+data/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Env / secrets
+.env
+docs/operacion-produccion/.env
+
+# Local certs
+docs/operacion-produccion/certs/

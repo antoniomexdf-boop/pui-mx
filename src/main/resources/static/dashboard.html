@@ -1,0 +1,129 @@
+<!--
+  @copyright 2026 Jesus Antonio Jimenez Avina <antoniomexdf@gmail.com>
+  @license   https://opensource.org/licenses/MIT MIT License.
+  @repository https://github.com/antoniomexdf-boop/pui-mx
+-->
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PUI MX | Consola</title>
+  <link rel="stylesheet" href="/assets/dashboard.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-kicker">PUI</span>
+        <h1>MX Control</h1>
+        <p>Monitoreo del demo de integracion.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Consulta rapida</h2>
+        <form id="curp-form">
+          <label for="curp-input">CURP</label>
+          <input id="curp-input" name="curp" placeholder="TEST010101HDFABC01" maxlength="18">
+          <button type="submit">Buscar historial</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2>Acciones</h2>
+        <button id="refresh-button" type="button">Actualizar ahora</button>
+        <label class="refresh-toggle">
+          <input id="auto-refresh" type="checkbox" checked>
+          <span>Auto refresh cada 15s</span>
+        </label>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Consola de control</p>
+          <h2>Actividad remota y trazabilidad institucional</h2>
+        </div>
+        <p id="last-update">Sin actualizar</p>
+      </header>
+
+      <section class="stats" id="stats"></section>
+
+      <section class="grid">
+        <article class="card">
+          <div class="card-head">
+            <h3>Auditoria reciente</h3>
+            <span class="tag">/demo/auditoria</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Operacion</th>
+                  <th>Reporte</th>
+                  <th>Fase</th>
+                  <th>Resultado</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody id="audit-body"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>Reportes activos</h3>
+            <span class="tag">/demo/reportes</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>CURP</th>
+                  <th>Activo</th>
+                  <th>Fase 1</th>
+                  <th>Fase 2</th>
+                  <th>Ultima verificacion</th>
+                </tr>
+              </thead>
+              <tbody id="report-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid single">
+        <article class="card">
+          <div class="card-head">
+            <h3>Registros institucionales</h3>
+            <span class="tag" id="records-tag">/demo/registros</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>CURP</th>
+                  <th>Nombre</th>
+                  <th>Evento</th>
+                  <th>Fecha</th>
+                  <th>Lugar</th>
+                  <th>Contacto</th>
+                </tr>
+              </thead>
+              <tbody id="records-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/assets/dashboard.js"></script>
+</body>
+</html>

@@ -14,9 +14,9 @@
 
     <groupId>mx.gob.institucion</groupId>
     <artifactId>pui-mx</artifactId>
-    <version>0.9.5</version>
+    <version>0.9.6</version>
     <name>PUI MX</name>
-    <description>Demo funcional de integracion PUI para instituciones en Mexico</description>
+    <description>Integracion institucional PUI con Spring Boot, auditoria persistente y despliegue preparado para Apache y MariaDB</description>
 
     <properties>
         <java.version>17</java.version>

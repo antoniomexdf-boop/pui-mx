@@ -4,6 +4,15 @@ Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
 El formato sigue una version simplificada inspirada en Keep a Changelog.
 
+## [0.9.6] - 2026-03-19
+
+### Added
+- Workflow de GitHub Actions para ejecutar `mvn clean test` en `push` y `pull_request` sobre `main`.
+
+### Changed
+- `README.md` se reescribio para presentar `PUI MX` como integracion institucional y no como demo.
+- Se actualizo la version del proyecto y de artefactos asociados a `0.9.6`.
+
 ## [0.9.5] - 2026-03-19
 
 ### Changed

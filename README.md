@@ -1,114 +1,122 @@
 # PUI MX
 
-Demo funcional en Spring Boot 3.2 / Java 17 para integrar una institucion con la Plataforma Unica de Identidad.
+[![CI](https://github.com/antoniomexdf-boop/pui-mx/actions/workflows/ci.yml/badge.svg)](https://github.com/antoniomexdf-boop/pui-mx/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-## Que hace ahora
+PUI MX es una integracion institucional en Spring Boot 3 y Java 17 para interoperar con la Plataforma Unica de Identidad mediante autenticacion JWT, auditoria persistente, consulta de registros institucionales y seguimiento continuo de reportes.
 
-- Expone los 4 endpoints requeridos por PUI: `/login`, `/activar-reporte`, `/activar-reporte-prueba`, `/desactivar-reporte`.
-- Usa dos bases separadas:
-  - `platform-db`: esquemas `pui` y `audit` para reportes activos y bitacora.
-  - `datos-db`: esquema `datos` para los registros institucionales consultables.
-- Ejecuta las fases 1, 2 y 3 con consultas reales sobre la base `datos-db`.
-- Registra auditoria persistente de recepcion, coincidencias y cierre de busqueda.
-- Incluye `demo mode` para simular el envio a la PUI sin depender de conectividad externa.
-- Incluye endpoints de consulta del demo para que terceros revisen el comportamiento.
-- Incluye una consola web en `/dashboard.html` para visualizar historiales, reportes y consultas remotas.
+Ya no esta planteado como prototipo academico. El repositorio contiene una base funcional para despliegue institucional, con separacion de datos operativos y datos consultables, consola web de observacion y artefactos de preparacion para Apache + MariaDB.
 
-## Estructura de codigo simplificada
+## Capacidades
 
-- El paquete Java principal ahora es `puimx`.
-- Codigo productivo: `src/main/java/puimx`
-- Tests: `src/test/java/puimx`
-- Esto reemplaza la ruta anterior larga `mx/gob/institucion/pui`.
+- API REST para autenticacion, activacion de reportes, prueba de conectividad y desactivacion de seguimiento.
+- Dos bases de datos separadas:
+  - `platform_db` para operacion, reportes activos y auditoria.
+  - `datos_db` para registros institucionales consultables.
+- Flujo de busqueda en tres fases sobre registros institucionales.
+- Scheduler de busqueda continua para detectar nuevos movimientos relevantes.
+- Consola web en `/dashboard.html` para visualizar reportes, auditoria y actividad.
+- Perfil local con H2 y perfil productivo preparado para MariaDB.
+- Documentacion operativa y artefactos de despliegue para Apache.
 
-## Versionamiento
+## Arquitectura
 
-- El historial de cambios del proyecto se mantiene en `CHANGELOG.md`.
-- El manual operativo se mantiene en `MANUAL_INSTALACION_Y_PRUEBAS.md`.
-- La documentacion para despliegue y carga productiva se encuentra en `docs/operacion-produccion/`.
-- El stack base de despliegue real incluye `docs/operacion-produccion/docker-compose.yml`, `.env.example`, `run-prod.sh` y `apache-pui-mx.conf`.
+```text
+Clientes externos / PUI
+        |
+        v
+   Apache HTTPD
+        |
+        v
+ Spring Boot PUI MX
+   |            |
+   v            v
+platform_db   datos_db
+```
 
 ## Endpoints principales
 
-| Metodo | Path | Auth | Uso |
+| Metodo | Ruta | Autenticacion | Proposito |
 |---|---|---|---|
-| POST | `/login` | No | Obtener JWT |
-| POST | `/activar-reporte` | Bearer JWT | Persistir reporte e iniciar fases |
-| POST | `/activar-reporte-prueba` | Bearer JWT | Validar conectividad/contrato |
-| POST | `/desactivar-reporte` | Bearer JWT | Detener busqueda continua |
+| POST | `/login` | No | Emitir JWT |
+| POST | `/activar-reporte` | Bearer JWT | Registrar reporte e iniciar fases |
+| POST | `/activar-reporte-prueba` | Bearer JWT | Validar contrato y conectividad |
+| POST | `/desactivar-reporte` | Bearer JWT | Detener seguimiento continuo |
 | GET | `/demo/reportes` | No | Consultar reportes registrados |
-| GET | `/demo/auditoria` | No | Consultar bitacora |
-| GET | `/demo/registros` | No | Ver registros institucionales demo |
+| GET | `/demo/auditoria` | No | Consultar bitacora operativa |
+| GET | `/demo/registros` | No | Consultar registros institucionales |
 | GET | `/demo/registros/{curp}` | No | Filtrar registros por CURP |
-| GET | `/demo/resumen` | No | Resumen numerico para la consola |
-| GET | `/dashboard.html` | No | Consola de control web |
+| GET | `/demo/resumen` | No | Resumen para consola |
+| GET | `/dashboard.html` | No | Consola de observacion |
 
-## Configuracion demo
+## Inicio rapido
 
-Por defecto `application.yml` deja listo el demo con H2 en archivo y carga datos iniciales automaticamente.
+### Requisitos
 
-```yaml
-app:
-  datasource:
-    platform:
-      jdbc-url: jdbc:h2:file:./data/platform-db;MODE=MySQL;AUTO_SERVER=TRUE;DATABASE_TO_LOWER=TRUE
-    datos:
-      jdbc-url: jdbc:h2:file:./data/datos-db;MODE=MySQL;AUTO_SERVER=TRUE;DATABASE_TO_LOWER=TRUE
+- Java 17
+- Maven 3.9+
 
-pui:
-  api:
-    demo-mode: true
+### Ejecutar localmente
+
+```bash
+mvn clean test
+mvn spring-boot:run
 ```
 
-## Configuracion MariaDB
+La aplicacion quedara disponible en:
 
-El perfil `prod` ya viene preparado para MariaDB con dos bases:
+- `http://localhost:8080`
+- `http://localhost:8080/dashboard.html`
 
-- `platform_db`
-- `datos_db`
+### Empaquetar
 
-Variables esperadas:
-
-- `PLATFORM_DB_URL`
-- `PLATFORM_DB_USERNAME`
-- `PLATFORM_DB_PASSWORD`
-- `DATOS_DB_URL`
-- `DATOS_DB_USERNAME`
-- `DATOS_DB_PASSWORD`
-- `JWT_SECRET`
-- `PUI_CLAVE_RECIBIDA`
-- `PUI_RFC_HOMOCLAVE`
-- `PUI_API_CLAVE`
-- `PUI_BIOMETRICOS_CLAVE`
-
-## Flujo demo rapido
-
-1. Levanta la app.
-2. Haz `POST /login`.
-3. Haz `POST /activar-reporte` con la CURP `TEST010101HDFABC01`.
-4. Consulta `GET /demo/reportes` y `GET /demo/auditoria`.
-5. Espera el scheduler o inserta nuevos registros en `datos-db` para ver la fase 3.
-6. Abre `http://localhost:8080/dashboard.html` para ver la consola.
-
-Payload sugerido:
-
-```json
-{
-  "id": "A1B2C3D4E5F6A1B2-550e8400-e29b-41d4-a716-446655440000",
-  "curp": "TEST010101HDFABC01",
-  "nombre": "JUAN",
-  "primer_apellido": "PEREZ",
-  "segundo_apellido": "LOPEZ",
-  "fecha_nacimiento": "1990-01-01",
-  "fecha_desaparicion": "2024-12-15",
-  "lugar_nacimiento": "CDMX",
-  "sexo_asignado": "H"
-}
+```bash
+mvn clean package
+java -jar target/pui-mx-0.9.6.jar
 ```
 
-## Notas
+## Produccion
 
-- No pude ejecutar `mvn test` en este entorno porque Maven no esta instalado localmente.
-- Los scripts SQL de demo viven en:
-  - `src/main/resources/db/platform`
-  - `src/main/resources/db/datos`
+El proyecto ya incluye base para despliegue con Apache + MariaDB en:
+
+- `docs/operacion-produccion/README.md`
+- `docs/operacion-produccion/apache-pui-mx.conf`
+- `docs/operacion-produccion/docker-compose.yml`
+- `docs/operacion-produccion/.env.example`
+- `docs/operacion-produccion/run-prod.sh`
+
+Tambien se incluye la documentacion para carga de datos y provisionamiento de bases:
+
+- `docs/operacion-produccion/FORMATO_DATOS_CARGA.md`
+- `docs/operacion-produccion/plantilla_registros_institucionales.csv`
+- `docs/operacion-produccion/mariadb_crear_bases_y_usuarios.sql`
+- `docs/operacion-produccion/mariadb_importacion_datos.md`
+
+## Estado del proyecto
+
+Estado actual: base funcional lista para evolucionarse a productivo institucional.
+
+Cobertura ya validada localmente en el proyecto:
+
+- compilacion y pruebas Maven exitosas
+- seguridad JWT operativa
+- persistencia dual de datos
+- consola de observacion disponible
+- documentacion operativa incluida
+
+Pendientes normales antes de una puesta en produccion formal:
+
+- credenciales y secretos reales
+- certificados TLS validos
+- integracion real con endpoints externos de PUI
+- endurecimiento operativo, monitoreo y respaldos
+
+## Documentacion
+
+- `CHANGELOG.md`
+- `MANUAL_INSTALACION_Y_PRUEBAS.md`
+- `docs/operacion-produccion/`
+
+## Licencia
+
+MIT. Ver `LICENSE.md`.

@@ -16,7 +16,7 @@ cd "$ROOT_DIR"
 echo "Compilando artefacto..."
 mvn clean package -DskipTests
 
-JAR_NAME="${APP_JAR_NAME:-pui-mx-0.9.6.jar}"
+JAR_NAME="${APP_JAR_NAME:-pui-mx-0.9.7.jar}"
 
 if [[ ! -f "$ROOT_DIR/target/$JAR_NAME" ]]; then
   echo "No se encontro target/$JAR_NAME"

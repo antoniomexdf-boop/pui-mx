@@ -4,6 +4,16 @@ Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
 El formato sigue una version simplificada inspirada en Keep a Changelog.
 
+## [0.9.7] - 2026-03-19
+
+### Added
+- Captura principal del dashboard en `docs/screenshots/dashboard-principal.png` y referencia visual en `README.md`.
+
+### Changed
+- Se ajusto el dashboard a una apariencia mas institucional, con paleta plana y sin degradados.
+- Se reemplazo el branding visible de `PUI` por `Plataforma Unica de Identidad` en la consola.
+- Se actualizo la version del proyecto y de artefactos asociados a `0.9.7`.
+
 ## [0.9.6] - 2026-03-19
 
 ### Added

@@ -34,6 +34,12 @@ Clientes externos / PUI
 platform_db   datos_db
 ```
 
+## Vista del sistema
+
+Consola institucional incluida en la aplicacion:
+
+![Dashboard principal](docs/screenshots/dashboard-principal.png)
+
 ## Endpoints principales
 
 | Metodo | Ruta | Autenticacion | Proposito |
@@ -72,7 +78,7 @@ La aplicacion quedara disponible en:
 
 ```bash
 mvn clean package
-java -jar target/pui-mx-0.9.6.jar
+java -jar target/pui-mx-0.9.7.jar
 ```
 
 ## Produccion

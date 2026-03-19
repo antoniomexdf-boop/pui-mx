@@ -5,15 +5,15 @@
  */
 
 :root {
-  --bg: #0e1726;
-  --bg-soft: #162338;
-  --panel: rgba(18, 29, 46, 0.88);
-  --line: rgba(132, 154, 190, 0.22);
-  --text: #e8eef8;
-  --muted: #9cb0cf;
-  --accent: #33d1a0;
-  --accent-soft: rgba(51, 209, 160, 0.12);
-  --danger: #ff7b72;
+  --bg: #f3f5f7;
+  --bg-soft: #ffffff;
+  --panel: #ffffff;
+  --line: #d6dce3;
+  --text: #1d2733;
+  --muted: #5f6b78;
+  --accent: #7a1f2b;
+  --accent-soft: #f5e7e9;
+  --danger: #b42318;
   --font: "IBM Plex Sans", "Segoe UI", sans-serif;
 }
 
@@ -25,10 +25,7 @@ body {
   margin: 0;
   font-family: var(--font);
   color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(51, 209, 160, 0.16), transparent 28%),
-    radial-gradient(circle at top right, rgba(104, 138, 255, 0.18), transparent 24%),
-    linear-gradient(180deg, #0a1320 0%, #101b2e 100%);
+  background: var(--bg);
 }
 
 .shell {
@@ -40,8 +37,7 @@ body {
 .sidebar {
   padding: 28px;
   border-right: 1px solid var(--line);
-  background: rgba(6, 12, 22, 0.72);
-  backdrop-filter: blur(14px);
+  background: #eceff3;
 }
 
 .brand-kicker,
@@ -69,9 +65,8 @@ body {
 .stat {
   border: 1px solid var(--line);
   background: var(--panel);
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(16, 24, 40, 0.06);
 }
 
 .panel {
@@ -106,9 +101,13 @@ input {
 button {
   padding: 12px 14px;
   cursor: pointer;
-  background: linear-gradient(90deg, #33d1a0, #4aa0ff);
-  color: #08131f;
+  background: var(--accent);
+  color: #ffffff;
   font-weight: 700;
+}
+
+button:hover {
+  background: #671a24;
 }
 
 .content {
@@ -195,7 +194,7 @@ th {
 }
 
 tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: #f8fafc;
 }
 
 .pill {
@@ -209,7 +208,7 @@ tr:hover td {
 }
 
 .pill.off {
-  background: rgba(255, 123, 114, 0.12);
+  background: #fdecec;
   color: var(--danger);
 }
 

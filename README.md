@@ -78,7 +78,7 @@ La aplicacion quedara disponible en:
 
 ```bash
 mvn clean package
-java -jar target/pui-mx-0.9.7.jar
+java -jar target/pui-mx-0.9.8.jar
 ```
 
 ## Produccion
@@ -100,7 +100,7 @@ Tambien se incluye la documentacion para carga de datos y provisionamiento de ba
 
 ## Estado del proyecto
 
-Estado actual: base funcional lista para evolucionarse a productivo institucional.
+Estado actual: plataforma en fase preproductiva, preparada para despliegue institucional.
 
 Cobertura ya validada localmente en el proyecto:
 

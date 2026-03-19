@@ -4,6 +4,12 @@ Todos los cambios relevantes de este proyecto se documentan en este archivo.
 
 El formato sigue una version simplificada inspirada en Keep a Changelog.
 
+## [0.9.8] - 2026-03-19
+
+### Changed
+- Se actualizo el estado del proyecto en `README.md` a: `plataforma en fase preproductiva, preparada para despliegue institucional`.
+- Se actualizo la version del proyecto y de artefactos asociados a `0.9.8`.
+
 ## [0.9.7] - 2026-03-19
 
 ### Added

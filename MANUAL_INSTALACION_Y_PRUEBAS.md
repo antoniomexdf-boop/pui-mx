@@ -69,7 +69,7 @@ mvn spring-boot:run
 O bien:
 
 ```bash
-java -jar target/pui-mx-0.9.7.jar
+java -jar target/pui-mx-0.9.8.jar
 ```
 
 ### 5. Resultado esperado
